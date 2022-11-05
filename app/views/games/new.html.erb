@@ -1,0 +1,26 @@
+<div class="row" >
+<% @letters.each do |letter| %>
+<div class="col test-center border fs-1 badge bg-primary">
+  <%= letter %>
+</div>
+<% end %>
+</div>
+
+<div class="row justify-content-center">
+<form id="form" action="/score" method="post" data-turbo="false">
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <input type="text" name="attempt" placeholder="What's your word?" class="col-8">
+  <input type="hidden" name="letters" value= <%= @letters.join %>>
+  <input type="hidden" id="time" name="time_taken" value="">
+  <input type="submit" class="col-2">
+</form>
+</div>
+
+<script>
+  let startTime = Date.now()
+  const form = document.getElementById('form');
+  form.addEventListener('submit', () => {
+    endTime = Date.now()
+    document.getElementById("time").value = (((endTime - startTime) % 60000) / 1000).toFixed(0);
+  });
+</script>
